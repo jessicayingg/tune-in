@@ -30,6 +30,12 @@ struct ProfileView: View {
             .padding()
             
             HStack {
+                Text("Email: ")
+                
+                Text(user.email)
+            }
+            
+            HStack {
                 Text("Most Listened-To Artist: ")
                 Text("NAME")
             }

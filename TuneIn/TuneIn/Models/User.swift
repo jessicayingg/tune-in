@@ -16,7 +16,7 @@ struct User: Codable {
     // General user things
     let id: String?
     let name: String
-    let email: String?
+    let email: String
     let profileURL: String?
     let country: String?
     let subscription: String? // premium or free
