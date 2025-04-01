@@ -14,9 +14,9 @@ struct User: Codable {
     let refreshToken: String?
     let tokenExpirationDate: TimeInterval?
     // General user things
-    let id: String
+    let id: String?
     let name: String
-    let email: String
+    let email: String?
     let profileURL: String?
     let country: String?
     let subscription: String? // premium or free

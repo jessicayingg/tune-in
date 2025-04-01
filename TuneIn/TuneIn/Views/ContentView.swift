@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    let accessToken: String
+    let user: User // Accepting an User object
     
     var body: some View {
         TabView {
@@ -17,7 +17,7 @@ struct ContentView: View {
             .tabItem {
                 Label("Functions", systemImage: "music.quarternote.3")
             }
-            ProfileView()
+            ProfileView(user: user)
             .padding()
             .tabItem {
                 Label("Profile", systemImage: "person.circle")
@@ -25,7 +25,7 @@ struct ContentView: View {
         }
     }
 }
-
+/*
 #Preview {
-    ContentView(accessToken: "Poopy")
-}
+    ContentView(user: "Poopy")
+}*/

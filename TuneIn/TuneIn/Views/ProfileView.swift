@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ProfileView: View {
+    let user: User
+    
     var body: some View {
         VStack {
             // Profile picture
@@ -22,7 +24,7 @@ struct ProfileView: View {
                 Text("Hi, ")
                     .font(.title)
                 
-                Text("NAME")
+                Text(user.name)
                     .font(.title)
             }
             .padding()
@@ -73,7 +75,8 @@ struct ProfileView: View {
         .padding()
     }
 }
-
+/*
 #Preview {
     ProfileView()
 }
+*/
