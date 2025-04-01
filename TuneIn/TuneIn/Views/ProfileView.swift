@@ -13,12 +13,28 @@ struct ProfileView: View {
     var body: some View {
         VStack {
             // Profile picture
-            Image(systemName: "person.circle")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .foregroundColor(Color.blue)
-                .frame(width: 125, height: 125)
-                .padding()
+            if let profileURL = user.profileURL, let url = URL(string: profileURL) {
+                AsyncImage(url: url) { image in
+                    image.resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .clipShape(Circle())
+                } placeholder: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color.blue)
+                        .frame(width: 125, height: 125)
+                        .padding()
+                }
+            } else {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(Color.blue)
+                    .frame(width: 125, height: 125)
+                    .padding()
+            }
             
             HStack {
                 Text("Hi, ")
@@ -81,8 +97,20 @@ struct ProfileView: View {
         .padding()
     }
 }
-/*
+
 #Preview {
-    ProfileView()
+    let dummyUser = User(
+        accessToken: "dummy_access_token",
+        refreshToken: "dummy_refresh_token",
+        tokenExpirationDate: Date().timeIntervalSince1970 + 3600, // 1 hour in the future
+        id: "12345",
+        name: "Test",
+        email: "test@gmail.com",
+        profileURL: nil,
+        country: "CA",
+        subscription: "premium"
+    )
+
+    return ProfileView(user: dummyUser)
 }
-*/
+
