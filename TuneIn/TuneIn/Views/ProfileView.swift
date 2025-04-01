@@ -77,7 +77,7 @@ struct ProfileView: View {
                 .buttonStyle(.borderedProminent)
             }
             .padding()
-            
+            /*
             VStack {
                 Text("Listening Trends: ")
                 
@@ -91,7 +91,7 @@ struct ProfileView: View {
                     // Graph here
                 }
             }
-            .padding()
+            .padding()*/
             
         }
         .padding()
