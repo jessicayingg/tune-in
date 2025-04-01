@@ -25,7 +25,19 @@ struct ContentView: View {
         }
     }
 }
-/*
+
 #Preview {
-    ContentView(user: "Poopy")
-}*/
+    let dummyUser = User(
+        accessToken: "dummy_access_token",
+        refreshToken: "dummy_refresh_token",
+        tokenExpirationDate: Date().timeIntervalSince1970 + 3600, // 1 hour in the future
+        id: "12345",
+        name: "Test",
+        email: "test@gmail.com",
+        profileURL: nil,
+        country: "CA",
+        subscription: "premium"
+    )
+
+    return ContentView(user: dummyUser)
+}

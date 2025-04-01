@@ -18,7 +18,7 @@ struct FunctionsView: View {
                 // code for action
             }
             
-            FunctionButton(title: "Listening Mood Analysis", background: .pink) {
+            FunctionButton(title: "Listening Moods", background: .pink) {
                 // code for action
             }
             
@@ -34,7 +34,7 @@ struct FunctionsView: View {
                 // code for action
             }
             
-            FunctionButton(title: "Guess the Song!", background: .blue) {
+            FunctionButton(title: "Guess the Song!", background: .indigo) {
                 // code for action
             }
         }
