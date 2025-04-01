@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3DA5A5C22D99D74600A29764 /* Exceptions for "TuneIn" folder in "TuneIn" target */ = {
+		3D7E7E702D9BA07600D144FE /* Exceptions for "TuneIn" folder in "TuneIn" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -21,10 +21,10 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		3DA5A5AA2D99D17500A29764 /* TuneIn */ = {
+		3D7E7E672D9BA07600D144FE /* TuneIn */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				3DA5A5C22D99D74600A29764 /* Exceptions for "TuneIn" folder in "TuneIn" target */,
+				3D7E7E702D9BA07600D144FE /* Exceptions for "TuneIn" folder in "TuneIn" target */,
 			);
 			path = TuneIn;
 			sourceTree = "<group>";
@@ -45,7 +45,7 @@
 		3DA5A59F2D99D17500A29764 = {
 			isa = PBXGroup;
 			children = (
-				3DA5A5AA2D99D17500A29764 /* TuneIn */,
+				3D7E7E672D9BA07600D144FE /* TuneIn */,
 				3DA5A5A92D99D17500A29764 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,7 +74,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				3DA5A5AA2D99D17500A29764 /* TuneIn */,
+				3D7E7E672D9BA07600D144FE /* TuneIn */,
 			);
 			name = TuneIn;
 			packageProductDependencies = (
