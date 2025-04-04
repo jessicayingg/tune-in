@@ -11,41 +11,32 @@ struct FunctionButton: View {
     // Things that will be passed in
     let title: String
     let background: Color
-    let action: () -> Void
     
     var body: some View {
-        Button {
-            // Some kind of action
-            action()
-        } label: {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(background)
-                
-                HStack {
-                    Image(systemName: "music.note")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(Color.blue)
-                        .frame(maxHeight: .infinity)
-                        .padding()
-                    
-                    Text(title)
-                        .foregroundColor(Color.white)
-                        .bold()
-                        .font(.system(size: 30))
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(background)
             
+            HStack {
+                Image(systemName: "music.note")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(Color.blue)
+                    .frame(maxHeight: .infinity)
+                    .padding()
+                
+                Text(title)
+                    .foregroundColor(Color.white)
+                    .bold()
+                    .font(.system(size: 30))
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        
         }
     }
 }
 
 #Preview {
-    FunctionButton(title: "Value",
-                   background: .pink) {
-        
-    }
+    FunctionButton(title: "Value", background: .pink)
 }

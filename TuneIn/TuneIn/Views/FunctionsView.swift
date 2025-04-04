@@ -17,33 +17,28 @@ struct FunctionsView: View {
                     .font(.title)
                 
                 
-                // NavigationLink to TrendsView
-                // Wrap the FunctionButton inside a NavigationLink
                 NavigationLink(destination: TrendsView()) {
-                    FunctionButton(title: "Listening Trends", background: .red) {
-                        // other action here
-                        // this doesn't work, figure something out
-                    }
+                    FunctionButton(title: "Listening Trends", background: .red)
                 }
                 
-                FunctionButton(title: "Listening Moods", background: .pink) {
-                    // code for action
+                NavigationLink(destination: MoodAnalysisView()) {
+                    FunctionButton(title: "Listening Moods", background: .pink)
                 }
                 
-                FunctionButton(title: "Discover New Music", background: .orange) {
-                    // code for action
+                NavigationLink(destination: TrendsView()) {
+                    FunctionButton(title: "Discover New Music", background: .orange)
                 }
                 
-                FunctionButton(title: "Playlist Clean-up", background: .mint) {
-                    // code for action
+                NavigationLink(destination: TrendsView()) {
+                    FunctionButton(title: "Playlist Clean-up", background: .mint)
                 }
                 
-                FunctionButton(title: "Study Timer", background: .teal) {
-                    // code for action
+                NavigationLink(destination: TrendsView()) {
+                    FunctionButton(title: "Study Timer", background: .teal)
                 }
                 
-                FunctionButton(title: "Guess the Song!", background: .indigo) {
-                    // code for action
+                NavigationLink(destination: TrendsView()) {
+                    FunctionButton(title: "Guess the Song!", background: .indigo)
                 }
             }
         }

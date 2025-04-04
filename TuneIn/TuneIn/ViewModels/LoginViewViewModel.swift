@@ -85,15 +85,8 @@ class LoginViewViewModel: ObservableObject {
                         name: userResponse.displayName,
                         email: userResponse.email,
                         profileURL: userResponse.images.first?.url,
-                        // NOTE for future me:
-                        // The url shows up as Optional("https://i.scdn.co/image/ab6775700000ee85e7565dbe9932abc47cdf5286")
-                        // So I think I will need to trim it
                         country: userResponse.country,
-                        // Same thing
-                        // Optional("CA")
                         subscription: userResponse.product
-                        // Same thing
-                        // Optional("premium")
                     )
                     print("User data successfully loaded: \(self.user!)") // Debugging print
                 }
