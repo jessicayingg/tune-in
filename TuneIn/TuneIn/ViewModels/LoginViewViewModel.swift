@@ -10,7 +10,6 @@ import SwiftUI
 
 class LoginViewViewModel: ObservableObject {
     // Stores access token after user logs in
-    @Published var accessToken: String? = nil
     @Published var user: User? = nil // For storing user details
     
     let clientID = APIConstants.clientId

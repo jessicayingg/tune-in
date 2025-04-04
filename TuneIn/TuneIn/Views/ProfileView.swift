@@ -77,21 +77,6 @@ struct ProfileView: View {
                 .buttonStyle(.borderedProminent)
             }
             .padding()
-            /*
-            VStack {
-                Text("Listening Trends: ")
-                
-                VStack {
-                    Text("Listening Duration")
-                    // Graph here
-                }
-                
-                VStack {
-                    Text("Genres Listened To")
-                    // Graph here
-                }
-            }
-            .padding()*/
             
         }
         .padding()

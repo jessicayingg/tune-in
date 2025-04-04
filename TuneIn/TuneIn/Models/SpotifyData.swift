@@ -23,11 +23,11 @@ struct Artist: Codable {
 // An album
 struct Album: Codable {
     let name: String
-    let images: [Image]
+    let images: [AlbumImage]
 }
 
 // An image
-struct Image: Codable {
+struct AlbumImage: Codable {
     let url: String
 }
 

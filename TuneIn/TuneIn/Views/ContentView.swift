@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            FunctionsView()
+            FunctionsView(user: user)
             .padding()
             .tabItem {
                 Label("Functions", systemImage: "music.quarternote.3")

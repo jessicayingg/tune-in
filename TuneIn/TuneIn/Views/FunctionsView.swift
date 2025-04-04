@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct FunctionsView: View {
+    let user: User
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -17,7 +19,7 @@ struct FunctionsView: View {
                     .font(.title)
                 
                 
-                NavigationLink(destination: TrendsView()) {
+                NavigationLink(destination: TrendsView(user: user)) {
                     FunctionButton(title: "Listening Trends", background: .red)
                 }
                 
@@ -25,19 +27,19 @@ struct FunctionsView: View {
                     FunctionButton(title: "Listening Moods", background: .pink)
                 }
                 
-                NavigationLink(destination: TrendsView()) {
+                NavigationLink(destination: MoodAnalysisView()) {
                     FunctionButton(title: "Discover New Music", background: .orange)
                 }
                 
-                NavigationLink(destination: TrendsView()) {
+                NavigationLink(destination: MoodAnalysisView()) {
                     FunctionButton(title: "Playlist Clean-up", background: .mint)
                 }
                 
-                NavigationLink(destination: TrendsView()) {
+                NavigationLink(destination: MoodAnalysisView()) {
                     FunctionButton(title: "Study Timer", background: .teal)
                 }
                 
-                NavigationLink(destination: TrendsView()) {
+                NavigationLink(destination: MoodAnalysisView()) {
                     FunctionButton(title: "Guess the Song!", background: .indigo)
                 }
             }
@@ -46,5 +48,17 @@ struct FunctionsView: View {
 }
 
 #Preview {
-    FunctionsView()
+    let dummyUser = User(
+        accessToken: "dummy_access_token",
+        refreshToken: "dummy_refresh_token",
+        tokenExpirationDate: Date().timeIntervalSince1970 + 3600, // 1 hour in the future
+        id: "12345",
+        name: "Test",
+        email: "test@gmail.com",
+        profileURL: nil,
+        country: "CA",
+        subscription: "premium"
+    )
+
+    return FunctionsView(user: dummyUser)
 }
