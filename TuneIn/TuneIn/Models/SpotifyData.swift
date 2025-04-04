@@ -35,3 +35,13 @@ struct AlbumImage: Codable {
 struct TopTracksResponse: Codable {
     let items: [Track]
 }
+
+// For the recent tracks api call response
+struct RecentTracksResponse: Codable {
+    let items: [RecentTrack]
+}
+
+struct RecentTrack: Codable {
+    let track: Track
+    let played_at: String // Don't need it for now at least
+}

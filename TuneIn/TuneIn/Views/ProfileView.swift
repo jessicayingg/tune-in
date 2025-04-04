@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProfileView: View {
     let user: User
+    @StateObject var viewModel = ProfileViewViewModel()
+    @State private var recentTracks: [RecentTrack] = []
     
     var body: some View {
         VStack {
@@ -62,24 +64,37 @@ struct ProfileView: View {
             }
             
             VStack {
-                Text("Recently Played Songs: ")
-                Button("Wildflower") {
-                    
+                Text("Recently Played Tracks: ")
+                
+                // For each loop basically
+                ForEach(recentTracks, id: \.track.id) { track in
+                    HStack {
+                        Text(track.track.name)
+                        Text(" - ")
+                        Text(track.track.artists[0].name)
+                    }
                 }
-                .buttonStyle(.borderedProminent)
-                Button("Wildflower") {
-                    
-                }
-                .buttonStyle(.borderedProminent)
-                Button("Wildflower") {
-                    
-                }
-                .buttonStyle(.borderedProminent)
             }
             .padding()
             
         }
         .padding()
+        .onAppear {
+            guard let accessToken = user.accessToken else {
+                print("Access token is nil")
+                return
+            }
+            
+            // Get the recent tracks
+            viewModel.fetchRecentTracks(accessToken: accessToken) {
+                tracks in
+                if let tracks = tracks {
+                    self.recentTracks = tracks
+                } else {
+                    print("No tracks fetched")
+                }
+            }
+        }
     }
 }
 

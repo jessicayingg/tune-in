@@ -16,7 +16,7 @@ enum APIConstants {
     static let responseType = "token"
     
     // things we want to get from the user
-    static let scopes = "user-read-private user-read-email user-top-read"
+    static let scopes = "user-read-private user-read-email user-top-read user-read-recently-played"
     
     static var authParams = [
         "response_type": responseType,
