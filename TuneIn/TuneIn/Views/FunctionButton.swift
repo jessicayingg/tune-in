@@ -16,6 +16,7 @@ struct FunctionButton: View {
     var body: some View {
         Button {
             // Some kind of action
+            action()
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
