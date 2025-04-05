@@ -69,6 +69,22 @@ struct ProfileView: View {
                 // For each loop basically
                 ForEach(recentTracks, id: \.track.id) { track in
                     HStack {
+                        if let imageURL = track.track.album.images.first?.url,
+                           let url = URL(string: imageURL) {
+                            AsyncImage(url: url) { image in
+                                image.resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                            } placeholder: {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color.blue)
+                                    .frame(width: 50, height: 50)
+                                    .padding()
+                            }
+                        }
+                        
                         Text(track.track.name)
                         Text(" - ")
                         Text(track.track.artists[0].name)

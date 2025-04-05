@@ -29,6 +29,8 @@ struct Album: Codable {
 // An image
 struct AlbumImage: Codable {
     let url: String
+    let height: Int
+    let width: Int
 }
 
 // For the top tracks api call response
