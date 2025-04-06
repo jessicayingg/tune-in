@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     let user: User
     @StateObject var viewModel = ProfileViewViewModel()
+    @State private var topTrack: [Track] = []
     @State private var recentTracks: [RecentTrack] = []
     
     var body: some View {
@@ -53,14 +54,41 @@ struct ProfileView: View {
                 Text(user.email)
             }
             
-            HStack {
+            VStack {
                 Text("Most Listened-To Artist: ")
-                Text("NAME")
+                
+                ForEach(topTrack, id: \.id) { track in
+                    Text(track.artists[0].name)
+                }
             }
             
-            HStack {
+            VStack {
                 Text("Most Played Song: ")
-                Text("SONG-TITLE")
+                
+                ForEach(topTrack, id: \.id) { track in
+                    HStack {
+                        if let imageURL = track.album.images.first?.url,
+                           let url = URL(string: imageURL) {
+                            AsyncImage(url: url) { image in
+                                image.resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                            } placeholder: {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color.blue)
+                                    .frame(width: 50, height: 50)
+                                    .padding()
+                            }
+                        }
+                        
+                        Text(track.name)
+                        Text(" - ")
+                        Text(track.artists[0].name)
+                    }
+                }
+                
             }
             
             VStack {
@@ -106,6 +134,20 @@ struct ProfileView: View {
                 tracks in
                 if let tracks = tracks {
                     self.recentTracks = tracks
+                } else {
+                    print("No tracks fetched")
+                }
+            }
+            
+            // Get the top tracks
+            viewModel.fetchTopTrack(accessToken: accessToken) {
+                tracks in
+                if let tracks = tracks {
+                    self.topTrack = tracks
+                    print("Printing top tracks variable!")
+                    print(self.topTrack)
+                    print("topTrack length: ")
+                    print(self.topTrack.count)
                 } else {
                     print("No tracks fetched")
                 }
