@@ -9,7 +9,39 @@ import Foundation
 
 class ProfileViewViewModel: ObservableObject {
     
-
+    func fetchTopArtist(accessToken: String, completion: @escaping ([Artist]?) -> Void) {
+        let url = URL(string: "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=1&offset=0")!
+        var request = URLRequest(url: url)
+        
+        // Set the Authorization header with the Bearer token
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        // Perform the network request
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error fetching recent tracks: \(error)")
+                completion(nil)
+                return
+            }
+            
+            // Parse the response
+            if let data = data {
+                // Print the raw response to debug
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    print("Raw response: \(jsonString)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let topArtistResponse = try decoder.decode(TopArtistsResponse.self, from: data)
+                    completion(topArtistResponse.items)
+                } catch {
+                    print("Error decoding recent tracks: \(error)")
+                    completion(nil)
+                }
+            }
+        }.resume()
+    }
     
     func fetchTopTrack(accessToken: String, completion: @escaping ([Track]?) -> Void) {
         let url = URL(string: "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=1&offset=0")!
@@ -21,7 +53,7 @@ class ProfileViewViewModel: ObservableObject {
         // Perform the network request
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error fetching recent tracks: \(error)")
+                print("Error fetching top tracks: \(error)")
                 completion(nil)
                 return
             }

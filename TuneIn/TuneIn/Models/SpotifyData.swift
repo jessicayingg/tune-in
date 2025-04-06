@@ -17,7 +17,9 @@ struct Track: Codable {
 
 // An artist
 struct Artist: Codable {
+    let id: String
     let name: String
+    let images: [AlbumImage]?
 }
 
 // An album
@@ -31,6 +33,11 @@ struct AlbumImage: Codable {
     let url: String
     let height: Int
     let width: Int
+}
+
+// For the top tracks api call response
+struct TopArtistsResponse: Codable {
+    let items: [Artist]
 }
 
 // For the top tracks api call response

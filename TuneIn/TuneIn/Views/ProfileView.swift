@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     let user: User
     @StateObject var viewModel = ProfileViewViewModel()
+    @State private var topArtist: [Artist] = []
     @State private var topTrack: [Track] = []
     @State private var recentTracks: [RecentTrack] = []
     
@@ -57,8 +58,8 @@ struct ProfileView: View {
             VStack {
                 Text("Most Listened-To Artist: ")
                 
-                ForEach(topTrack, id: \.id) { track in
-                    Text(track.artists[0].name)
+                ForEach(topArtist, id: \.id) { artist in
+                    Text(artist.name)
                 }
             }
             
@@ -144,10 +145,16 @@ struct ProfileView: View {
                 tracks in
                 if let tracks = tracks {
                     self.topTrack = tracks
-                    print("Printing top tracks variable!")
-                    print(self.topTrack)
-                    print("topTrack length: ")
-                    print(self.topTrack.count)
+                } else {
+                    print("No tracks fetched")
+                }
+            }
+            
+            // Get the top artists
+            viewModel.fetchTopArtist(accessToken: accessToken) {
+                artists in
+                if let artists = artists {
+                    self.topArtist = artists
                 } else {
                     print("No tracks fetched")
                 }
