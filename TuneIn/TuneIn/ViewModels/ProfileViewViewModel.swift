@@ -27,9 +27,10 @@ class ProfileViewViewModel: ObservableObject {
             // Parse the response
             if let data = data {
                 // Print the raw response to debug
+                /*
                 if let jsonString = String(data: data, encoding: .utf8) {
                     print("Raw response: \(jsonString)")
-                }
+                }*/
                 
                 do {
                     let decoder = JSONDecoder()

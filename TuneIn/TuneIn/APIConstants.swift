@@ -24,4 +24,14 @@ enum APIConstants {
         "redirect_uri": redirectUri,
         "scope": scopes
     ]
+    
+    // OpenAI key
+    static let openAIKey: String = {
+        guard let key = Bundle.main.infoDictionary?["OPENAI_API_KEY"] as? String else {
+            fatalError("OPENAI_API_KEY not found in Info.plist")
+        }
+        return key
+    }()
+    
+    static let openRouterKey = Bundle.main.infoDictionary?["OPENROUTER_API_KEY"] as? String ?? ""
 }

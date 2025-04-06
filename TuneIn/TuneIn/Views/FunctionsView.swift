@@ -27,7 +27,7 @@ struct FunctionsView: View {
                     FunctionButton(title: "Listening Moods", background: .pink)
                 }
                 
-                NavigationLink(destination: MoodAnalysisView()) {
+                NavigationLink(destination: NewMusicView(user: user)) {
                     FunctionButton(title: "Discover New Music", background: .orange)
                 }
                 
