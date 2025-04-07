@@ -11,35 +11,42 @@ struct RecentTrackInfoCard: View {
     let recentTrack: RecentTrack
     
     var body: some View {
-        HStack {
-            AsyncImage(url: URL(string: recentTrack.track.album.images[0].url)) { image in
-                image.resizable()
-                    .scaledToFit()
-                    .frame(width: 80, height: 80)
-            } placeholder: {
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color.blue)
-                    .frame(width: 80, height: 80)
-                    .padding()
-            }
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(.white)
+                .shadow(radius: 10)
+                .opacity(0.4)
+                .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
             
-            VStack(alignment: .leading) {
-                Text(recentTrack.track.name)
-                    .font(.headline)
-                    .fontWeight(.bold)
+            HStack {
+                AsyncImage(url: URL(string: recentTrack.track.album.images[0].url)) { image in
+                    image.resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                } placeholder: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color.blue)
+                        .frame(width: 80, height: 80)
+                        .padding()
+                }
                 
-                Text(recentTrack.track.artists[0].name)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+                VStack(alignment: .leading) {
+                    Text(recentTrack.track.name)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
+                    Text(recentTrack.track.artists[0].name)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.leading, 10)
             }
-            .padding(.leading, 10)
+            .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
+            .cornerRadius(5)
+            .shadow(radius: 10)
         }
-        .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
-        .background(Color.white)
-        .cornerRadius(5)
-        .shadow(radius: 10)
     }
 }
 

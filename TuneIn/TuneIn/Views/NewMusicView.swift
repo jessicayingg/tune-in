@@ -18,9 +18,8 @@ struct NewMusicView: View {
     var body: some View {
         
         VStack {
-            Text("Finding new music for you based on your recent listens: ")
-            Button("Click to discover some new songs!") {
-                // Button action: 
+            Button(action: {
+                // Button action:
                 self.topTracksString = viewModel.buildTracksString(tracks: self.topTracks)
                 self.aiPrompt = viewModel.buildAIPrompt(tracksString: self.topTracksString)
                 print(self.aiPrompt)
@@ -44,7 +43,28 @@ struct NewMusicView: View {
                         }
                     }
                 }
+            }) {
+                Text("Find new songs")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .strokeBorder(
+                                LinearGradient(
+                                    gradient: Gradient(
+                                        colors:
+                                            [Color.indigo, Color.orange, Color.red]
+                                    ),
+                                    startPoint: .topLeading, // top left
+                                    endPoint: .bottomTrailing // bottom right
+                                ),
+                                lineWidth: 5 // border width
+                            )
+                    )
+                    .padding()
             }
+            
             // songs.indices is used to loop with an index
             ForEach(self.aiRecommendations.indices, id: \.self) { index in
                 HStack {
@@ -77,42 +97,6 @@ struct NewMusicView: View {
         }
     }
 }
-/*
-struct NewMusicView: View {
-    let user: User
-    @StateObject var viewModel = NewMusicViewViewModel()
-    @State private var topTracks: [Track] = []
-    @State private var topTracksString: String
-    @State private var aiPrompt: String
-    
-    var body: some View {
-        
-        VStack {
-            Text("Finding new music for you based on your recent listens: ")
-            
-        }
-        .onAppear() {
-            guard let accessToken = user.accessToken else {
-                print("Access token is nil")
-                return
-            }
-            
-            // Get the recent tracks
-            viewModel.fetchTopTracks(accessToken: accessToken) {
-                tracks in
-                if let tracks = tracks {
-                    self.topTracks = tracks
-                } else {
-                    print("No tracks fetched")
-                }
-            }
-            
-            topTracksString = viewModel.buildTracksString(tracks: self.topTracks)
-            aiPrompt = viewModel.buildAIPrompt(tracksString: topTracksString)
-            print(aiPrompt)
-        }
-    }
-}*/
 
 #Preview {
     let dummyUser = User(

@@ -11,31 +11,38 @@ struct ArtistInfoCard: View {
     let artist: Artist
     
     var body: some View {
-        HStack {
-            AsyncImage(url: URL(string: (artist.images?[0].url)!)) { image in
-                image.resizable()
-                    .scaledToFit()
-                    .frame(width: 80, height: 80)
-            } placeholder: {
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color.blue)
-                    .frame(width: 80, height: 80)
-                    .padding()
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(.white)
+                .shadow(radius: 10)
+                .opacity(0.4)
+                .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
+            HStack {
+                AsyncImage(url: URL(string: (artist.images?[0].url)!)) { image in
+                    image.resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                } placeholder: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color.blue)
+                        .frame(width: 80, height: 80)
+                        .padding()
+                }
+                
+                VStack(alignment: .leading) {
+                    Text(artist.name)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                }
+                .padding(.leading, 10)
             }
-            
-            VStack(alignment: .leading) {
-                Text(artist.name)
-                    .font(.headline)
-                    .fontWeight(.bold)
-            }
-            .padding(.leading, 10)
+            .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
+            .cornerRadius(5)
+            .shadow(radius: 10)
         }
-        .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
-        .background(Color.white)
-        .cornerRadius(5)
-        .shadow(radius: 10)
+        
     }
 }
 

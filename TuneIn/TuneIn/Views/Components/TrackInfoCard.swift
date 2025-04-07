@@ -11,34 +11,40 @@ struct TrackInfoCard: View {
     let track: Track
     
     var body: some View {
-        VStack {
-            AsyncImage(url: URL(string: track.album.images[0].url)) { image in
-                image.resizable()
-                    .scaledToFit()
-                    .frame(width: 150, height: 150)
-            } placeholder: {
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color.blue)
-                    .frame(width: 50, height: 50)
-                    .padding()
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(.white)
+                .shadow(radius: 10)
+                .opacity(0.4)
+                .frame(width: 200, height: 250)
+            
+            VStack {
+                AsyncImage(url: URL(string: track.album.images[0].url)) { image in
+                    image.resizable()
+                        .scaledToFit()
+                        .frame(width: 150, height: 150)
+                } placeholder: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color.blue)
+                        .frame(width: 50, height: 50)
+                        .padding()
+                }
+                
+                Text(track.name)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .padding(.top, 10)
+                
+                Text(track.artists[0].name)
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
             }
-            
-            Text(track.name)
-                .font(.headline)
-                .fontWeight(.bold)
-                .padding(.top, 10)
-            
-            Text(track.artists[0].name)
-                .font(.subheadline)
-                .foregroundColor(.gray)
+            .frame(width: 200, height: 250)
+            .cornerRadius(10)
+            .shadow(radius: 10)
         }
-        .frame(width: 200, height: 250)
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(radius: 10)
-        .padding()
     }
 }
 
