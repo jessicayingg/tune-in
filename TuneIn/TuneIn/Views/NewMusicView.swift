@@ -20,7 +20,7 @@ struct NewMusicView: View {
         VStack {
             Text("Finding new music for you based on your recent listens: ")
             Button("Click to discover some new songs!") {
-                // action here
+                // Button action: 
                 self.topTracksString = viewModel.buildTracksString(tracks: self.topTracks)
                 self.aiPrompt = viewModel.buildAIPrompt(tracksString: self.topTracksString)
                 print(self.aiPrompt)
@@ -113,7 +113,7 @@ struct NewMusicView: View {
         }
     }
 }*/
-/*
+
 #Preview {
     let dummyUser = User(
         accessToken: "dummy_access_token",
@@ -128,4 +128,4 @@ struct NewMusicView: View {
     )
 
     return NewMusicView(user: dummyUser)
-}*/
+}

@@ -10,25 +10,24 @@ import SwiftUI
 struct FunctionButton: View {
     // Things that will be passed in
     let title: String
-    let background: Color
+    //let background: Color
     
     var body: some View {
+        // Stack things on top of each other
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(background)
+                .foregroundColor(.white)
+                .cornerRadius(5)
+                .shadow(radius: 10)
+                .opacity(0.5)
             
             HStack {
-                Image(systemName: "music.note")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color.blue)
-                    .frame(maxHeight: .infinity)
-                    .padding()
-                
                 Text(title)
-                    .foregroundColor(Color.white)
+                    .foregroundColor(.white)
                     .bold()
-                    .font(.system(size: 30))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
@@ -38,5 +37,6 @@ struct FunctionButton: View {
 }
 
 #Preview {
-    FunctionButton(title: "Value", background: .pink)
+    //FunctionButton(title: "Value", background: .pink)
+    FunctionButton(title: "Value")
 }

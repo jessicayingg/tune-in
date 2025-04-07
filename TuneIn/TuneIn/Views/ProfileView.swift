@@ -15,148 +15,125 @@ struct ProfileView: View {
     @State private var recentTracks: [RecentTrack] = []
     
     var body: some View {
-        VStack {
-            // Profile picture
-            if let profileURL = user.profileURL, let url = URL(string: profileURL) {
-                AsyncImage(url: url) { image in
-                    image.resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .clipShape(Circle())
-                } placeholder: {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(Color.blue)
-                        .frame(width: 125, height: 125)
-                        .padding()
+        ScrollView {
+            VStack {
+                HStack() {
+                    // Profile picture
+                    if let profileURL = user.profileURL, let url = URL(string: profileURL) {
+                        AsyncImage(url: url) { image in
+                            image.resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color.blue)
+                                .frame(width: 125, height: 125)
+                                .padding()
+                        }
+                    } else {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(Color.blue)
+                            .frame(width: 125, height: 125)
+                            .padding()
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text(user.name)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                        Text(user.email)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.leading, 10)
                 }
-            } else {
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color.blue)
-                    .frame(width: 125, height: 125)
-                    .padding()
-            }
-            
-            HStack {
-                Text("Hi, ")
-                    .font(.title)
+                .frame(width: 350, height: 150)
+                .padding()
                 
-                Text(user.name)
-                    .font(.title)
+                Divider()
+                
+                VStack {
+                    Text("Most Listened-To Artist: ")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .padding(.bottom, 5)
+                    
+                    ForEach(topArtist, id: \.id) { artist in
+                        ArtistInfoCard(artist: artist)
+                    }
+                }.padding()
+                
+                Divider()
+                
+                VStack {
+                    Text("Most Played Song: ")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .padding(.bottom, 5)
+                    
+                    ForEach(topTrack, id: \.id) { track in
+                        TrackInfoCard(track: track)
+                    }
+                    
+                }
+                .padding()
+                
+                Divider()
+                
+                VStack {
+                    Text("Recently Played Tracks: ")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .padding(.bottom, 5)
+                    
+                    // For each loop basically
+                    ForEach(recentTracks, id: \.track.id) { track in
+                        RecentTrackInfoCard(recentTrack: track)
+                    }
+                }
+                .padding()
+                
             }
             .padding()
-            
-            HStack {
-                Text("Email: ")
-                
-                Text(user.email)
-            }
-            
-            VStack {
-                Text("Most Listened-To Artist: ")
-                
-                ForEach(topArtist, id: \.id) { artist in
-                    Text(artist.name)
+            .onAppear {
+                guard let accessToken = user.accessToken else {
+                    print("Access token is nil")
+                    return
                 }
-            }
-            
-            VStack {
-                Text("Most Played Song: ")
                 
-                ForEach(topTrack, id: \.id) { track in
-                    HStack {
-                        if let imageURL = track.album.images.first?.url,
-                           let url = URL(string: imageURL) {
-                            AsyncImage(url: url) { image in
-                                image.resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                            } placeholder: {
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Color.blue)
-                                    .frame(width: 50, height: 50)
-                                    .padding()
-                            }
-                        }
-                        
-                        Text(track.name)
-                        Text(" - ")
-                        Text(track.artists[0].name)
+                // Get the recent tracks
+                viewModel.fetchRecentTracks(accessToken: accessToken) {
+                    tracks in
+                    if let tracks = tracks {
+                        self.recentTracks = tracks
+                    } else {
+                        print("No tracks fetched")
                     }
                 }
                 
-            }
-            
-            VStack {
-                Text("Recently Played Tracks: ")
-                
-                // For each loop basically
-                ForEach(recentTracks, id: \.track.id) { track in
-                    HStack {
-                        if let imageURL = track.track.album.images.first?.url,
-                           let url = URL(string: imageURL) {
-                            AsyncImage(url: url) { image in
-                                image.resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                            } placeholder: {
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Color.blue)
-                                    .frame(width: 50, height: 50)
-                                    .padding()
-                            }
-                        }
-                        
-                        Text(track.track.name)
-                        Text(" - ")
-                        Text(track.track.artists[0].name)
+                // Get the top tracks
+                viewModel.fetchTopTrack(accessToken: accessToken) {
+                    tracks in
+                    if let tracks = tracks {
+                        self.topTrack = tracks
+                    } else {
+                        print("No tracks fetched")
                     }
                 }
-            }
-            .padding()
-            
-        }
-        .padding()
-        .onAppear {
-            guard let accessToken = user.accessToken else {
-                print("Access token is nil")
-                return
-            }
-            
-            // Get the recent tracks
-            viewModel.fetchRecentTracks(accessToken: accessToken) {
-                tracks in
-                if let tracks = tracks {
-                    self.recentTracks = tracks
-                } else {
-                    print("No tracks fetched")
-                }
-            }
-            
-            // Get the top tracks
-            viewModel.fetchTopTrack(accessToken: accessToken) {
-                tracks in
-                if let tracks = tracks {
-                    self.topTrack = tracks
-                } else {
-                    print("No tracks fetched")
-                }
-            }
-            
-            // Get the top artists
-            viewModel.fetchTopArtist(accessToken: accessToken) {
-                artists in
-                if let artists = artists {
-                    self.topArtist = artists
-                } else {
-                    print("No tracks fetched")
+                
+                // Get the top artists
+                viewModel.fetchTopArtist(accessToken: accessToken) {
+                    artists in
+                    if let artists = artists {
+                        self.topArtist = artists
+                    } else {
+                        print("No tracks fetched")
+                    }
                 }
             }
         }
