@@ -62,5 +62,5 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 
 # google firebase stuff
-TuneIn/TuneIn/Info.plst
+*.plist
 *.xcconfig
