@@ -4,6 +4,7 @@
 //
 //  Created by Jessica Ying on 2025-04-04.
 //
+// This file is for all Spotify tracks, artists, etc.
 
 import Foundation
 

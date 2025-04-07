@@ -18,6 +18,12 @@ struct FunctionsView: View {
                     .bold()
                     .font(.title)
                 
+                NavigationLink(destination: NewMusicView(user: user)) {
+                    //FunctionButton(title: "Discover New Music", background: .orange)
+                    FunctionButton(title: "Discover New Music")
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding()
                 
                 NavigationLink(destination: TrendsView(user: user)) {
                     //FunctionButton(title: "Listening Trends", background: .red)
@@ -29,13 +35,6 @@ struct FunctionsView: View {
                 NavigationLink(destination: MoodAnalysisView()) {
                     //FunctionButton(title: "Listening Moods", background: .pink)
                     FunctionButton(title: "Listening Moods")
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding()
-                
-                NavigationLink(destination: NewMusicView(user: user)) {
-                    //FunctionButton(title: "Discover New Music", background: .orange)
-                    FunctionButton(title: "Discover New Music")
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding()

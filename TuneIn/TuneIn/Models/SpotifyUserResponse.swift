@@ -4,6 +4,7 @@
 //
 //  Created by Jessica Ying on 2025-04-01.
 //
+// This is for Spotify's callback when a user is received
 
 import Foundation
 

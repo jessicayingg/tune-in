@@ -10,22 +10,9 @@
 		3DA5A5A82D99D17500A29764 /* TuneIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TuneIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3D7E7E702D9BA07600D144FE /* Exceptions for "TuneIn" folder in "TuneIn" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 3DA5A5A72D99D17500A29764 /* TuneIn */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3D7E7E672D9BA07600D144FE /* TuneIn */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				3D7E7E702D9BA07600D144FE /* Exceptions for "TuneIn" folder in "TuneIn" target */,
-			);
 			path = TuneIn;
 			sourceTree = "<group>";
 		};

@@ -4,6 +4,7 @@
 //
 //  Created by Jessica Ying on 2025-04-01.
 //
+// This is for a user within our coding logic
 
 import Foundation
 
