@@ -14,8 +14,7 @@ struct FunctionsView: View {
         NavigationView {
             VStack {
                 Text("Welcome to Tune-in!")
-                    .foregroundColor(.white)
-                    .padding()
+                    .padding(.top, 50)
                     .bold()
                     .font(.title)
                 
@@ -24,50 +23,44 @@ struct FunctionsView: View {
                     //FunctionButton(title: "Listening Trends", background: .red)
                     FunctionButton(title: "Listening Trends")
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding()
                 
                 NavigationLink(destination: MoodAnalysisView()) {
                     //FunctionButton(title: "Listening Moods", background: .pink)
                     FunctionButton(title: "Listening Moods")
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding()
                 
                 NavigationLink(destination: NewMusicView(user: user)) {
                     //FunctionButton(title: "Discover New Music", background: .orange)
                     FunctionButton(title: "Discover New Music")
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding()
                 
                 NavigationLink(destination: MoodAnalysisView()) {
                     //FunctionButton(title: "Playlist Clean-up", background: .mint)
                     FunctionButton(title: "Playlist Clean-up")
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding()
                 
                 NavigationLink(destination: MoodAnalysisView()) {
                     //FunctionButton(title: "Study Timer", background: .teal)
                     FunctionButton(title: "Study Timer")
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding()
                 
                 NavigationLink(destination: MoodAnalysisView()) {
                     //FunctionButton(title: "Guess the Song!", background: .indigo)
                     FunctionButton(title: "Guess the Song")
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding()
             }
-            .background(
-                LinearGradient(
-                    gradient: Gradient(
-                        colors:
-                            [Color.indigo, Color.yellow, Color.orange, Color.red]
-                    ),
-                    startPoint: .topLeading, // top left
-                    endPoint: .bottomTrailing // bottom right
-                )
-                .brightness(-0.05)
-                .edgesIgnoringSafeArea(.all)
-            )
         }
     }
 }
