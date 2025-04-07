@@ -52,5 +52,5 @@ struct RecentTracksResponse: Codable {
 
 struct RecentTrack: Codable {
     let track: Track
-    let played_at: String // Don't need it for now at least
+    let played_at: String? // Don't need it for now at least
 }

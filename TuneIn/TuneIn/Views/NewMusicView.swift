@@ -48,6 +48,7 @@ struct NewMusicView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
+                    .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .strokeBorder(
@@ -62,18 +63,43 @@ struct NewMusicView: View {
                                 lineWidth: 5 // border width
                             )
                     )
-                    .padding()
             }
             
-            // songs.indices is used to loop with an index
-            ForEach(self.aiRecommendations.indices, id: \.self) { index in
-                HStack {
-                    Text("\(index + 1)")
-                    Text(": ")
-                    Text(self.aiRecommendations[index].title)
-                    Text(" - ")
-                    Text(self.aiRecommendations[index].artistName)
+            ScrollView {
+                // songs.indices is used to loop with an index
+                ForEach(self.aiRecommendations.indices, id: \.self) { index in
+                    // Some of these are hard-coded, fix the abstraction later
+                    let artist = Artist(
+                        id: self.aiRecommendations[index].artistName,
+                        name: self.aiRecommendations[index].artistName,
+                        images: nil)
+                    let albumImage = AlbumImage(
+                        url: "",
+                        height: 640,
+                        width: 640)
+                    let album = Album(
+                        name: "",
+                        images: [albumImage])
+                    let track = Track(
+                        id: self.aiRecommendations[index].title,
+                        name: self.aiRecommendations[index].title,
+                        artists: [artist],
+                        album: album)
+                    TrackInfoCard(track: track)
                 }
+                .frame(maxWidth: .infinity)
+                
+                // Old For each loop
+                /*
+                ForEach(self.aiRecommendations.indices, id: \.self) { index in
+                    HStack {
+                        Text("\(index + 1)")
+                        Text(": ")
+                        Text(self.aiRecommendations[index].title)
+                        Text(" - ")
+                        Text(self.aiRecommendations[index].artistName)
+                    }
+                }*/
             }
             
         }

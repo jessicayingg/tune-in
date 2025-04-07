@@ -36,10 +36,12 @@ struct RecentTrackInfoCard: View {
                     Text(recentTrack.track.name)
                         .font(.headline)
                         .fontWeight(.bold)
+                        .lineLimit(1) // limits to 1 line
                     
                     Text(recentTrack.track.artists[0].name)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
+                        .lineLimit(1) // limits to 1 line
                 }
                 .padding(.leading, 10)
             }
