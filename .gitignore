@@ -64,3 +64,8 @@ fastlane/test_output
 # google firebase stuff
 *.plist
 *.xcconfig
+
+# Xcode project user data
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
