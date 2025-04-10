@@ -69,3 +69,8 @@ fastlane/test_output
 *.xcuserstate
 *.xcworkspace/xcuserdata/
 *.xcodeproj/xcuserdata/
+*.plist
+TuneIn/TuneIn.xcodeproj/project.xcworkspace/xcuserdata/jessicaying.xcuserdatad/UserInterfaceState.xcuserstate
+TuneIn/TuneIn.xcodeproj/project.pbxproj
+TuneIn/.DS_Store
+.DS_Store
