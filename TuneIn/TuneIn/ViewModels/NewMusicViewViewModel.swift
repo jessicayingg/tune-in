@@ -133,4 +133,29 @@ class NewMusicViewViewModel: ObservableObject {
             }
         }.resume()
     }
+    
+    func getSongId(url: URL, completion: @escaping (String?) -> Void) {
+        
+    }
+    
+    func getSongIds(recommendedTracks: [AIResponseTrack], completion: @escaping ([Track]?) -> Void) {
+        // A list of urls to search with
+        let urlList = recommendedTracks.map { track in
+            let searchTitle = track.title.replacingOccurrences(of: " ", with: "%20")
+            let searchArtist = track.artistName.replacingOccurrences(of: " ", with: "%20")
+            let url = URL(string: "https://api.spotify.com/v1/search?q=track:\(searchTitle)%20artist:\(searchArtist)&type=track&limit=1")
+            return url
+        }
+        
+        
+        /*let idList = urlList.map { url in
+            getSongId(url: url!) { result in
+                guard let songID = result else {
+                    print("Failed to get id.")
+                    return "Failed to get id"
+                }
+                return songID
+            }
+        } */
+    }
 }
