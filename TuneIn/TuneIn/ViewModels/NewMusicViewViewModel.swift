@@ -27,7 +27,7 @@ class NewMusicViewViewModel: ObservableObject {
 
         // Make the full request to the API
         let requestBody: [String: Any] = [
-            "model": "openrouter/quasar-alpha",
+            "model": "meta-llama/llama-4-scout:free",
             "messages": [
                 ["role": "system", "content": "You are a music recommendation engine."], // Initial message
                 ["role": "user", "content": prompt] // Message containing the specific task I want it to do
@@ -59,6 +59,11 @@ class NewMusicViewViewModel: ObservableObject {
 
             // Trying to decode the JSON sent by the API
             do {
+                
+                if let rawJsonString = String(data: data, encoding: .utf8) {
+                    print("Raw JSON response: \(rawJsonString)")
+                }
+                
                 if let result = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let choices = result["choices"] as? [[String: Any]],
                    let message = choices.first?["message"] as? [String: Any], // Message has the actual AI-generated text
@@ -81,7 +86,9 @@ class NewMusicViewViewModel: ObservableObject {
         result += "\nTop Tracks:\n"
         result += "\(tracksString)\n"
         result += "Please return the songs as a JSON array with this structure:\n"
-        result += "[\n{ \"title\": ..., \"artistName\": ... },\n...]" // JSON structure can make it easier to decode
+        result += "[\n{ \"title\": ..., \"artistName\": ... },\n...]\n" // JSON structure can make it easier to decode
+        
+        result += "Do not provide any other text. Only proveide the JSON array with the given structure."
         
         return result
     }
