@@ -55,3 +55,10 @@ struct RecentTrack: Codable {
     let track: Track
     let played_at: String? // Don't need it for now at least
 }
+
+// For when searching for tracks
+// FYI I'M USING TOPTRACKSRESPONSE BECAUSE IT LOOKS THE SAME, BUT I SHOULD RENAME TOPTRACKS RESPONSE
+// TO SOMETHING MORE GENERIC LIKE TRACKCONTAINER OR SOMETHING LIKE THAT!!!
+struct TrackSearchResponse: Codable {
+    let tracks: TopTracksResponse
+}

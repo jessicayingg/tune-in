@@ -14,6 +14,7 @@ struct NewMusicView: View {
     @State private var topTracksString: String = ""
     @State private var aiPrompt: String = ""
     @State private var aiRecommendations: [AIResponseTrack] = []
+    @State private var searchedTracks: [Track] = []
     
     var body: some View {
         
@@ -24,7 +25,7 @@ struct NewMusicView: View {
                 self.aiPrompt = viewModel.buildAIPrompt(tracksString: self.topTracksString)
                 print(self.aiPrompt)
                 
-                viewModel.fetchQuasarRecommendations(prompt: self.aiPrompt) { result in
+                viewModel.fetchAIRecommendations(prompt: self.aiPrompt) { result in
                     guard let recommendations = result else {
                         print("Failed to get recommendations.")
                         return
@@ -41,6 +42,18 @@ struct NewMusicView: View {
                         } catch {
                             print("Failed to decode songs: \(error)")
                         }
+                    }
+                    
+                    
+                    let urls = viewModel.getSongURLs(recommendedTracks: self.aiRecommendations)
+                    guard let accessToken = user.accessToken else {
+                        print("No access token :(")
+                        return
+                    }
+                    
+                    viewModel.getSearchedTrack(urls: urls, accessToken: accessToken) { tracks in
+                        self.searchedTracks = tracks
+                        print("Got spotify's tracks")
                     }
                 }
             }) {
@@ -65,42 +78,54 @@ struct NewMusicView: View {
                     )
             }
             
-            ScrollView {
-                // songs.indices is used to loop with an index
-                ForEach(self.aiRecommendations.indices, id: \.self) { index in
-                    // Some of these are hard-coded, fix the abstraction later
-                    let artist = Artist(
-                        id: self.aiRecommendations[index].artistName,
-                        name: self.aiRecommendations[index].artistName,
-                        images: nil)
-                    let albumImage = AlbumImage(
-                        url: "",
-                        height: 640,
-                        width: 640)
-                    let album = Album(
-                        name: "",
-                        images: [albumImage])
-                    let track = Track(
-                        id: self.aiRecommendations[index].title,
-                        name: self.aiRecommendations[index].title,
-                        artists: [artist],
-                        album: album)
-                    TrackInfoCard(track: track)
-                }
-                .frame(maxWidth: .infinity)
-                
-                // Old For each loop
-                /*
-                ForEach(self.aiRecommendations.indices, id: \.self) { index in
-                    HStack {
-                        Text("\(index + 1)")
-                        Text(": ")
-                        Text(self.aiRecommendations[index].title)
-                        Text(" - ")
-                        Text(self.aiRecommendations[index].artistName)
+            if (!self.searchedTracks.isEmpty) {
+                ScrollView {
+                    // songs.indices is used to loop with an index
+                    ForEach(self.searchedTracks.indices, id: \.self) { index in
+                        let track = searchedTracks[index]
+                        TrackInfoCard(track: track)
                     }
-                }*/
+                    .frame(maxWidth: .infinity)
+                }
+            } else {
+                ScrollView {
+                    // songs.indices is used to loop with an index
+                    ForEach(self.aiRecommendations.indices, id: \.self) { index in
+                        // Some of these are hard-coded, fix the abstraction later
+                        let artist = Artist(
+                            id: self.aiRecommendations[index].artistName,
+                            name: self.aiRecommendations[index].artistName,
+                            images: nil)
+                        let albumImage = AlbumImage(
+                            url: "",
+                            height: 640,
+                            width: 640)
+                        let album = Album(
+                            name: "",
+                            images: [albumImage])
+                        let track = Track(
+                            id: self.aiRecommendations[index].title,
+                            name: self.aiRecommendations[index].title,
+                            artists: [artist],
+                            album: album)
+                        TrackInfoCard(track: track)
+                    }
+                    .frame(maxWidth: .infinity)
+                    
+                    // Old For each loop
+                    /*
+                    ForEach(self.aiRecommendations.indices, id: \.self) { index in
+                        HStack {
+                            Text("\(index + 1)")
+                            Text(": ")
+                            Text(self.aiRecommendations[index].title)
+                            Text(" - ")
+                            Text(self.aiRecommendations[index].artistName)
+                        }
+                    }*/
+                }
             }
+
             
         }
         .onAppear() {

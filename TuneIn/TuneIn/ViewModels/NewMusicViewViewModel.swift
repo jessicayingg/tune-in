@@ -10,8 +10,8 @@ import Foundation
 
 class NewMusicViewViewModel: ObservableObject {
     
-    // This function gets recommendations from Quasar
-    func fetchQuasarRecommendations(prompt: String, completion: @escaping (String?) -> Void) {
+    // This function gets recommendations from AI (Meta free)
+    func fetchAIRecommendations(prompt: String, completion: @escaping (String?) -> Void) {
         guard let url = URL(string: "https://openrouter.ai/api/v1/chat/completions") else {
             print("Invalid URL")
             completion(nil)
@@ -88,7 +88,7 @@ class NewMusicViewViewModel: ObservableObject {
         result += "Please return the songs as a JSON array with this structure:\n"
         result += "[\n{ \"title\": ..., \"artistName\": ... },\n...]\n" // JSON structure can make it easier to decode
         
-        result += "Do not provide any other text. Only proveide the JSON array with the given structure."
+        result += "Do not provide any other text. Only provide the JSON array with the given structure."
         
         return result
     }
@@ -141,28 +141,77 @@ class NewMusicViewViewModel: ObservableObject {
         }.resume()
     }
     
-    func getSongId(url: URL, completion: @escaping (String?) -> Void) {
+    
+    func getSearchedTrack(urls: [URL], accessToken: String, completion: @escaping ([Track]) -> Void) {
+        var foundTracks: [Track] = []
+        let dg = DispatchGroup()
+        
+        for url in urls {
+            dg.enter()
+            
+            var request = URLRequest(url: url)
+            request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                defer { dg.leave() }
+                
+                guard let data = data
+                else {
+                    print("No data for url: \(url)")
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let result = try decoder.decode(TrackSearchResponse.self, from: data)
+                    
+                    if let firstTrack = result.tracks.items.first {
+                        foundTracks.append(firstTrack)
+                        print("Found track: \(firstTrack.name)")
+                    } else {
+                        print("No tracks found for URL: \(url)")
+                    }
+                } catch {
+                    print("Decoding error: \(error.localizedDescription)")
+                }
+            }.resume()
+        }
+        
+        dg.notify(queue: .main) {
+            completion(foundTracks)
+        }
         
     }
     
-    func getSongIds(recommendedTracks: [AIResponseTrack], completion: @escaping ([Track]?) -> Void) {
+    func getSongURLs(recommendedTracks: [AIResponseTrack]) -> [URL] {
         // A list of urls to search with
+        /*
+        // Doing it with strings, better way is url components (shown below)
         let urlList = recommendedTracks.map { track in
             let searchTitle = track.title.replacingOccurrences(of: " ", with: "%20")
             let searchArtist = track.artistName.replacingOccurrences(of: " ", with: "%20")
             let url = URL(string: "https://api.spotify.com/v1/search?q=track:\(searchTitle)%20artist:\(searchArtist)&type=track&limit=1")
             return url
         }
+         */
         
+        var urlList: [URL] = []
         
-        /*let idList = urlList.map { url in
-            getSongId(url: url!) { result in
-                guard let songID = result else {
-                    print("Failed to get id.")
-                    return "Failed to get id"
-                }
-                return songID
+        for track in recommendedTracks {
+            var components = URLComponents(string: "https://api.spotify.com/v1/search")
+            
+            // All the parts that come after the q= in the url
+            components?.queryItems = [
+                URLQueryItem(name: "q", value: "track:\(track.title) artist:\(track.artistName)"),
+                URLQueryItem(name: "type", value: "track"),
+                URLQueryItem(name: "limit", value: "1")
+            ]
+            
+            if let url = components?.url {
+                urlList.append(url)
             }
-        } */
+        }
+        
+        return urlList
     }
 }
