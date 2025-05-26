@@ -147,7 +147,7 @@ class NewMusicViewViewModel: ObservableObject {
         var foundTracks: [Track] = []
         let dg = DispatchGroup()
         
-        for url in   {
+        for url in urls {
             dg.enter()
             
             var request = URLRequest(url: url)
