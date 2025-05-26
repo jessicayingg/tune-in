@@ -22,12 +22,12 @@ class NewMusicViewViewModel: ObservableObject {
         request.httpMethod = "POST"
         request.addValue("Bearer \(APIConstants.openRouterKey)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("openrouter-quasar-alpha", forHTTPHeaderField: "HTTP-Referer") // NEED THIS
+        request.addValue("deepseek-deepseek-chat", forHTTPHeaderField: "HTTP-Referer") // NEED THIS
         request.addValue("https://yourdomain.com", forHTTPHeaderField: "X-Title") // ALSO NEED, but just a placeholder is ok
 
         // Make the full request to the API
         let requestBody: [String: Any] = [
-            "model": "meta-llama/llama-4-scout:free",
+            "model": "deepseek/deepseek-chat-v3-0324:free",
             "messages": [
                 ["role": "system", "content": "You are a music recommendation engine."], // Initial message
                 ["role": "user", "content": prompt] // Message containing the specific task I want it to do
@@ -82,13 +82,14 @@ class NewMusicViewViewModel: ObservableObject {
     
     // This function builds the bulk of the prompt for the AI to eventually receive
     func buildAIPrompt(tracksString: String) -> String {
-        var result = "Based on these top tracks, recommend 10 Spotify songs this user might like:\n"
+        var result = "Based on these top tracks, recommend 10 Spotify songs this user might like, with a similar vibe / energy as these tracks:\n"
         result += "\nTop Tracks:\n"
         result += "\(tracksString)\n"
+        result += "Do not make up or guess song titles. You must only return tracks that can be verified by searching the EXACT song title and artist on Spotify. Only include songs from the artist’s official Spotify discography (no user uploads or unofficial releases). If uncertain, skip it and choose another. Do not recommend songs that are alreay given in these top tracks. \n"
         result += "Please return the songs as a JSON array with this structure:\n"
         result += "[\n{ \"title\": ..., \"artistName\": ... },\n...]\n" // JSON structure can make it easier to decode
         
-        result += "Do not provide any other text. Only provide the JSON array with the given structure."
+        result += "Do not provide any other text. Only provide the JSON array with the given structure. Do not use ` character, use ' instead."
         
         return result
     }
@@ -146,7 +147,7 @@ class NewMusicViewViewModel: ObservableObject {
         var foundTracks: [Track] = []
         let dg = DispatchGroup()
         
-        for url in urls {
+        for url in   {
             dg.enter()
             
             var request = URLRequest(url: url)

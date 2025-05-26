@@ -39,7 +39,7 @@ struct LoginView: View {
             viewModel.handleSpotifyCallback(url)
         }
         .onAppear() {
-            print(APIConstants.openAIKey)
+            //print(APIConstants.openAIKey)
         }
     }
 }
