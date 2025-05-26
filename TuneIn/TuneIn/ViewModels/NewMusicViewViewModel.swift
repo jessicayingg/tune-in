@@ -29,7 +29,7 @@ class NewMusicViewViewModel: ObservableObject {
         let requestBody: [String: Any] = [
             "model": "deepseek/deepseek-chat-v3-0324:free",
             "messages": [
-                ["role": "system", "content": "You are a music recommendation engine."], // Initial message
+                ["role": "system", "content": "You are a music recommendation engine that works with songs on Spotify."], // Initial message
                 ["role": "user", "content": prompt] // Message containing the specific task I want it to do
             ]
         ]
